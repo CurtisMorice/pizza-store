@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
+import { HashRouter as Router,Switch, Route, Redirect, Link} from 'react-router-dom';
+import Customer from '../Customer/Customer';
 import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
@@ -9,6 +11,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import {compose} from 'redux';
+
 
 const styles = {
     card: {
@@ -30,7 +33,9 @@ class Select extends Component {
 constructor(){
 super();
 this.state = {
-    pizzaArray: []
+    pizzaArray: [],
+    cartArray: [],
+    toCustomer: false
     }
 }
     
@@ -48,16 +53,43 @@ displayPizza = () => {
     this.displayPizza();
   }
 handleChangeClick = (event) => {
+  axios.put('/api/pizza/_id').then((response)=>{
+
+  }).catch((error)=>{
+    console.log('Error in put', error);
+  })
   
   
 }
 
-handleOrderClick = (event, pizza) => {
+handleOrderClick = (event) => {
   console.log('in toggleDescription', event);
-  console.log(pizza);
+  
+  this.state.cartArray.push(event);
+  
+  console.log(this.state.cartArray);
+  // .then(()=> this.setState)
+
+
+}
+handleSubmitClick =() =>{
+  const action = {type: 'ADD_ORDER', payload: this.state.cartArray};
+  this.props.dispatch(action)
+  this.setState(()=>({
+    toCustomer: true
+  }))
 }
   render(){
       const {classes} = this.props;
+      if(this.state.toCustomer){
+      
+      return <Router>
+        <Switch>
+        <Redirect to='/customer' component={Customer} />
+      </Switch>
+      </Router> 
+      }
+      
       return(
 
         <div>
@@ -76,7 +108,7 @@ handleOrderClick = (event, pizza) => {
        
         </CardContent>
         <CardActions>
-          <Button size="small" color="primary" onClick={() => this.handleOrderClick( pizza)}>
+          <Button size="small" color="primary" onClick={() => this.handleOrderClick(pizza)}>
             Order
           </Button>
           <Button size="small" color="primary" onClick={this.handleChangeClick}>
@@ -87,9 +119,19 @@ handleOrderClick = (event, pizza) => {
       </Card>
       )}
           
-           
+          <Router>
+          <div>
+          <Switch>
+        
+          <Route path='/customer' component={Customer} />
+          <Button  onClick={this.handleSubmitClick}> Click for NEXT </Button>
+          
+          </Switch>
+          </div>
+          </Router>
+          
         </div>
-
+        
       )
   }
 }

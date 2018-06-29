@@ -3,7 +3,7 @@ import './App.css';
 import {connect} from 'react-redux';
 import { HashRouter as Router, Route, Link} from 'react-router-dom';
 import Select from '../Select/Select';
-import Customer from '../Customer/Customer';
+// import Customer from '../Customer/Customer';
 
 const mapReduxStateToProps = (reduxStore) => ({
   reduxStore
@@ -21,13 +21,7 @@ class App extends Component {
         <img src="images/pizza_photo.png" alt=""/>
         <p>Pizza is great.</p>
         <Select />
-        
-        <Router>
-        <div>
-          <Route exact path='/customer' component={Customer} />
-          <Link to ='/customer'> Customer Page </Link>
-          </div>
-        </Router>
+     
         
       </div>
     );
@@ -35,3 +29,10 @@ class App extends Component {
 }
 
 export default connect(mapReduxStateToProps)(App);
+   
+        {/* <Router>
+        <div>
+          <Route exact path='/customer' component={Customer} />
+          <Link to ='/customer'> Customer Page </Link>
+          </div>
+        </Router> */}
