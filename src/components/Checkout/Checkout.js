@@ -28,7 +28,7 @@ class Checkout extends Component {
                         };
         const order_total = cartReducer.totalCost;
         const type = cartReducer.type;                
-        const body = {pizzas: select, customer: customer, order_total: order_total, type: type};
+        const body = {pizzas: pizzas, customer: customer, order_total: order_total, type: type};
         axios.post('/api/order', body).then((response) => {
             alert('Thank you for your order!');
             this.setState(() => ({
