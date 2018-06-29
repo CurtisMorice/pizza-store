@@ -47,8 +47,15 @@ displayPizza = () => {
 
     this.displayPizza();
   }
+handleChangeClick = (event) => {
+  
+  
+}
 
-
+handleOrderClick = (event, pizza) => {
+  console.log('in toggleDescription', event);
+  console.log(pizza);
+}
   render(){
       const {classes} = this.props;
       return(
@@ -69,10 +76,10 @@ displayPizza = () => {
        
         </CardContent>
         <CardActions>
-          <Button size="small" color="primary">
+          <Button size="small" color="primary" onClick={() => this.handleOrderClick( pizza)}>
             Order
           </Button>
-          <Button size="small" color="primary">
+          <Button size="small" color="primary" onClick={this.handleChangeClick}>
             Change
           </Button>
         </CardActions>
